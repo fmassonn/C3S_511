@@ -40,7 +40,7 @@ fig, ax = plt.subplots(2, 2, figsize=(8, 8), dpi = 300)
 
 # NH March
 thisAx = ax[0, 0]
-f = Dataset("./data/NH-03.nc" , mode = "r")
+f = Dataset("./data/NH-03_mean.nc" , mode = "r")
 lon = f.variables["lon"][:]
 lat = f.variables["lat"][:]
 sic = f.variables["ice_conc"][0, :, :]
@@ -56,7 +56,7 @@ m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
 # NH September
 thisAx = ax[0, 1]
-f = Dataset("./data/NH-09.nc" , mode = "r")
+f = Dataset("./data/NH-09_mean.nc" , mode = "r")
 lon = f.variables["lon"][:]
 lat = f.variables["lat"][:]
 sic = f.variables["ice_conc"][0, :, :]
@@ -72,7 +72,7 @@ m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
 # SH March
 thisAx = ax[1, 0]
-f = Dataset("./data/SH-02.nc" , mode = "r")
+f = Dataset("./data/SH-02_mean.nc" , mode = "r")
 lon = f.variables["lon"][:]
 lat = f.variables["lat"][:]
 sic = f.variables["ice_conc"][0, :, :]
@@ -88,7 +88,7 @@ m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
 # SH September
 thisAx = ax[1, 1]
-f = Dataset("./data/SH-09.nc" , mode = "r")
+f = Dataset("./data/SH-09_mean.nc" , mode = "r")
 lon = f.variables["lon"][:]
 lat = f.variables["lat"][:]
 sic = f.variables["ice_conc"][0, :, :]
