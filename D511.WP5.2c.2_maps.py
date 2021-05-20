@@ -34,39 +34,76 @@ alphas    = [1, 0.7, 0.5,
 # Graphs
 
 # Spatial coverage
-fig, ax = plt.subplots(2, 2, figsize=(8, 8), dpi = 300)
+fig, ax = plt.subplots(2, 2, figsize=(8, 8), dpi = 50)
 
-filein = ""
+# NH March
+thisAx = ax[0, 0]
 f = Dataset("./data/NH-03.nc" , mode = "r")
 lon = f.variables["lon"][:]
 lat = f.variables["lat"][:]
-sic = f.variables["ice_conc"][:]
+sic = f.variables["ice_conc"][0, :, :]
 f.close()
-stop()
-m = Basemap(projection='npstere',boundinglat=30,lon_0=0,resolution='l') # for North
-m.drawcoastlines(color='lightgray', linewidth=0.7, ax = ax[0])
-#m.fillcontinents(color='gray', ax = ax[0])
-m.pcolormesh(lon, lat, np.ones(lon.shape), ax = ax[0], latlon = True)
+m = Basemap(projection='npstere',boundinglat=60,lon_0=0,resolution='l') # for North
+mapped = m.pcolormesh(lon, lat, sic,
+             latlon=True, cmap='Blues_r', ax = thisAx, vmin = 0, vmax = 100)
+thisAx.set_title("March, NH")
+m.drawcoastlines(color='lightgray', linewidth=0.7, ax = thisAx)
+m.fillcontinents(color='gray', ax = thisAx)
+m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = thisAx )
+m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
-m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = ax[0] )
-m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = ax[0])
-
-# Repeat with SH
-sampleFile = root + "ESACCI-SEAICE-L4-SICONC-AMSR_25.0kmEASE2-SH-20050101-fv2.1.nc"
-f = Dataset(sampleFile, mode = "r")
+# NH September
+thisAx = ax[0, 1]
+f = Dataset("./data/NH-09.nc" , mode = "r")
 lon = f.variables["lon"][:]
 lat = f.variables["lat"][:]
+sic = f.variables["ice_conc"][0, :, :]
 f.close()
+m = Basemap(projection='npstere',boundinglat=60,lon_0=0,resolution='l') # for North
+mapped = m.pcolormesh(lon, lat, sic,
+             latlon=True, cmap='Blues_r', ax = thisAx, vmin = 0, vmax = 100)
+thisAx.set_title("September, NH")
+m.drawcoastlines(color='lightgray', linewidth=0.7, ax = thisAx)
+m.fillcontinents(color='gray', ax = thisAx)
+m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = thisAx )
+m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
-m = Basemap(projection='spstere',boundinglat=-30,lon_0=180,resolution='l')
-m.drawcoastlines(color='lightgray', linewidth=0.7, ax = ax[1])
-#m.fillcontinents(color='gray', ax = ax[1])
-m.pcolormesh(lon, lat, np.ones(lon.shape), ax = ax[1], latlon = True)
+# SH March
+thisAx = ax[1, 0]
+f = Dataset("./data/SH-02.nc" , mode = "r")
+lon = f.variables["lon"][:]
+lat = f.variables["lat"][:]
+sic = f.variables["ice_conc"][0, :, :]
+f.close()
+m = Basemap(projection='spstere',boundinglat=-50,lon_0=180,resolution='l') # for South
+mapped = m.pcolormesh(lon, lat, sic,
+             latlon=True, cmap='Blues_r', ax = thisAx, vmin = 0, vmax = 100)
+thisAx.set_title("February, SH")
+m.drawcoastlines(color='lightgray', linewidth=0.7, ax = thisAx)
+m.fillcontinents(color='gray', ax = thisAx)
+m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = thisAx )
+m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
-m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = ax[1] )
-m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = ax[1])
+# SH September
+thisAx = ax[1, 1]
+f = Dataset("./data/SH-09.nc" , mode = "r")
+lon = f.variables["lon"][:]
+lat = f.variables["lat"][:]
+sic = f.variables["ice_conc"][0, :, :]
+f.close()
+m = Basemap(projection='spstere',boundinglat=-50,lon_0=180,resolution='l') # for South
+mapped = m.pcolormesh(lon, lat, sic,
+             latlon=True, cmap='Blues_r', ax = thisAx, vmin = 0, vmax = 100)
+thisAx.set_title("September, SH")
+m.drawcoastlines(color='lightgray', linewidth=0.7, ax = thisAx)
+m.fillcontinents(color='gray', ax = thisAx)
+m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = thisAx )
+m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
 
-fig.tight_layout()
+fig.colorbar(mapped, orientation='horizontal', label='% (Fraction)', ax = ax.ravel().tolist(), pad = 0.8)
+
 fig.savefig("fig4.png")
+
+
 
