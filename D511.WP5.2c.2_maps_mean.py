@@ -5,6 +5,8 @@
 import numpy as np
 import glob
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 from   calendar import monthrange
 from mpl_toolkits.basemap import Basemap
 from netCDF4 import Dataset
@@ -34,7 +36,7 @@ alphas    = [1, 0.7, 0.5,
 # Graphs
 
 # Spatial coverage
-fig, ax = plt.subplots(2, 2, figsize=(8, 8), dpi = 50)
+fig, ax = plt.subplots(2, 2, figsize=(8, 8), dpi = 300)
 
 # NH March
 thisAx = ax[0, 0]
@@ -101,8 +103,7 @@ m.drawparallels(np.arange(-80.,81.,20.), labels=[1,0,0,0], ax = thisAx )
 m.drawmeridians(np.arange(-180.,181.,20.), labels=[1,0,0,0], ax = thisAx)
 
 
-fig.colorbar(mapped, orientation='horizontal', label='% (Fraction)', ax = ax.ravel().tolist(), pad = 0.8)
-
+fig.colorbar(mapped, orientation='horizontal', label='% (Fraction)', ax = ax.ravel().tolist(), pad = 0.05)
 fig.savefig("fig4.png")
 
 
